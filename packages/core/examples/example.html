@@ -1,0 +1,50 @@
+<div id="my-lucky"></div>
+
+<script src="../dist/index.umd.js"></script>
+<script>
+    const myLucky = new LuckyCanvas.LuckyWheel('#my-lucky', {
+        width: '300px',
+        height: '300px',
+        blocks: [{ padding: '10px', background: '#617df2' }],
+        prizes: [
+            { background: '#e9e8fe', fonts: [{ text: '0' }] },
+            { background: '#b8c5f2', fonts: [{ text: '1' }] },
+            { background: '#e9e8fe', fonts: [{ text: '2' }] },
+            { background: '#b8c5f2', fonts: [{ text: '3' }] },
+            { background: '#e9e8fe', fonts: [{ text: '4' }] },
+            { background: '#b8c5f2', fonts: [{ text: '5' }] },
+        ],
+        buttons: [{
+            radius: '35%',
+            background: '#8a9bf3',
+            pointer: true,
+            fonts: [{ text: '开始', top: '-10px' }]
+        }],
+        defaultConfig: {
+            stopRange: 0.8,
+            speed: 2,
+            gutter: '0px',
+            accelerationTime: 1000,
+            decelerationTime: 3000,
+            offsetDegree: 0,
+        },
+        // 👇 每次进入新区域，播放"哒"的一声
+        onCurrentChange(index, prize) {
+            // index = 当前是第几个奖品（从0开始数）
+            // prize = 当前奖品的所有信息
+
+            //console.log(index)           // 比如：2
+            console.log(prize.fonts[0].text)  // 比如："三等奖"
+            //console.log(prize.background)      // 比如："#ff0000"
+        },
+        start: function () {
+            // 开始游戏
+            myLucky.play()
+            // 使用定时器模拟接口
+            setTimeout(() => {
+                // 结束游戏
+                myLucky.stop(0)
+            }, 3000)
+        }
+    })
+</script>

@@ -62,6 +62,7 @@ export type DefaultStyleType = {
 
 export type StartCallbackType = (e: MouseEvent) => void
 export type EndCallbackType = (prize: object) => void
+export type OnCurrentChangeCallbackType = (index: number, prize: PrizeType) => void
 
 export default interface LuckyWheelConfig {
   width: string | number
@@ -73,4 +74,5 @@ export default interface LuckyWheelConfig {
   defaultStyle?: DefaultStyleType
   start?: StartCallbackType
   end?: EndCallbackType
+  onCurrentChange?: OnCurrentChangeCallbackType
 }

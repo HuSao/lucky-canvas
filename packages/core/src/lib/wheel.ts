@@ -7,7 +7,8 @@ import LuckyWheelConfig, {
   DefaultConfigType,
   DefaultStyleType,
   StartCallbackType,
-  EndCallbackType
+  EndCallbackType,
+  OnCurrentChangeCallbackType
 } from '../types/wheel'
 import {
   removeEnter,
@@ -29,6 +30,8 @@ export default class LuckyWheel extends Lucky {
   private _defaultStyle: Required<DefaultStyleType> = {} as Required<DefaultStyleType>
   private startCallback?: StartCallbackType
   private endCallback?: EndCallbackType
+  private onCurrentChangeCallback?: OnCurrentChangeCallbackType
+  private currentPrizeIndex = -1
   private Radius = 0                    // 大转盘半径
   private prizeRadius = 0               // 奖品区域半径
   private prizeDeg = 0                  // 奖品数学角度
@@ -98,7 +101,16 @@ export default class LuckyWheel extends Lucky {
     this.FPS = 16.6
     this.prizeFlag = -1
     this.step = 0
+    this.currentPrizeIndex = -1
     super.initLucky()
+  }
+
+  private getCurrentPrizeIndex(): number {
+    const {prizes, prizeDeg, rotateDeg, _defaultConfig} = this
+    if (!prizes.length) return -1
+    let pointerAngle = (360 - (rotateDeg % 360) + _defaultConfig.offsetDegree + 360) % 360
+    const index = Math.floor(pointerAngle / prizeDeg) % prizes.length
+    return index
   }
 
   /**
@@ -115,6 +127,7 @@ export default class LuckyWheel extends Lucky {
     this.$set(this, 'defaultStyle', data.defaultStyle || {})
     this.$set(this, 'startCallback', data.start)
     this.$set(this, 'endCallback', data.end)
+    this.$set(this, 'onCurrentChangeCallback', data.onCurrentChange)
   }
 
   /**
@@ -550,6 +563,15 @@ export default class LuckyWheel extends Lucky {
       this.stop(-1)
     }
     this.rotateDeg = rotateDeg
+
+    if (this.onCurrentChangeCallback) {
+      const newIndex = this.getCurrentPrizeIndex()
+      if (newIndex !== this.currentPrizeIndex) {
+        this.currentPrizeIndex = newIndex
+        this.onCurrentChangeCallback(newIndex, this.prizes[newIndex])
+      }
+    }
+
     this.draw()
     rAF(this.run.bind(this, num + 1))
   }
