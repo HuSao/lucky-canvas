@@ -74,8 +74,16 @@ function js(jsFileMap, scope) {
     scope.webpackWatcher = webpack(webpackConfig).watch({
       ignored: /node_modules/,
     }, webpackCallback)
+    return Promise.resolve()
   } else {
-    webpack(webpackConfig).run(webpackCallback)
+    return new Promise((resolve, reject) => {
+      webpack(webpackConfig).run((err, stats) => {
+        webpackCallback(err, stats)
+        if (err) return reject(err)
+        if (stats.hasErrors()) return reject(new Error('Webpack compilation failed'))
+        return resolve()
+      })
+    })
   }
 }
 
@@ -225,7 +233,7 @@ class BuildTask {
         jsFileList.length &&
         !_.compareArray(this.cachedComponentListMap.jsFileList, jsFileList)) {
         if (jsConfig.webpack) {
-          js(this.componentListMap.jsFileMap, this)
+          return js(this.componentListMap.jsFileMap, this)
         } else {
           return copy(jsFileList)
         }

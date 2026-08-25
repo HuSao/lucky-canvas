@@ -1,3 +1,4 @@
+import typescript from 'typescript'
 import ts from 'rollup-plugin-typescript2'
 import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
@@ -26,7 +27,10 @@ export default [
       },
     ],
     plugins: [
-      ts(),
+      ts({
+        typescript,
+        include: ['*.ts', '**/*.ts', '*.tsx', '**/*.tsx'],
+      }),
       json(),
       resolve(),
       commonjs(),

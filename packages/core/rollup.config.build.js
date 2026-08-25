@@ -1,4 +1,5 @@
 import path from 'path'
+import typescript from 'typescript'
 import ts from 'rollup-plugin-typescript2'
 import dts from 'rollup-plugin-dts'
 import json from '@rollup/plugin-json'
@@ -32,9 +33,9 @@ export default [
     ],
     plugins: [
       ts({
+        typescript,
         tsconfig: path.resolve(__dirname, './tsconfig.json'),
-        extensions: ['.js', '.ts'],
-        "declaration": true,
+        include: ['*.ts', '**/*.ts', '*.tsx', '**/*.tsx'],
       }),
       json(),
       resolve(),

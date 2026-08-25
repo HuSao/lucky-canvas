@@ -38,7 +38,10 @@ module.exports = {
       libraryTarget: 'commonjs2',
     },
     target: 'node',
-    externals: [nodeExternals()], // 忽略 node_modules
+    externals: [
+      nodeExternals(),
+      {'lucky-canvas': 'commonjs lucky-canvas'},
+    ], // 忽略 node_modules 和工作区运行时依赖
     module: {
       rules: [{
         test: /\.js$/i,
@@ -47,19 +50,19 @@ module.exports = {
         }, {
           loader: 'babel-loader',
           options: {
-            cacheDirectory: true,
+            cacheDirectory: false,
           },
         }],
-        exclude: /node_modules/
+        include: src
       }, {
         test: /\.ts$/,
-        exclude: /node_modules/,
+        include: src,
         use: [{
           loader: 'thread-loader',
         }, {
           loader: 'babel-loader',
           options: {
-            cacheDirectory: true,
+            cacheDirectory: false,
           },
         }, {
           loader: 'ts-loader',

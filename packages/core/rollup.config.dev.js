@@ -1,4 +1,5 @@
 import path from 'path'
+import typescript from 'typescript'
 import ts from 'rollup-plugin-typescript2'
 import json from '@rollup/plugin-json'
 import resolve from '@rollup/plugin-node-resolve'
@@ -35,8 +36,9 @@ export default {
     //   exclude: ['node_modules/**']
     // }),
     ts({
+      typescript,
       tsconfig: path.resolve(__dirname, './tsconfig.json'),
-      extensions: ['.js', '.ts']
+      include: ['*.ts', '**/*.ts', '*.tsx', '**/*.tsx']
     }),
     babel({
       runtimeHelpers: true,

@@ -39,6 +39,8 @@ export type ConfigType = {
   nodeType?: number
   // 配置
   flag: 'WEB' | 'MP-WX' | 'UNI-H5' | 'UNI-MP' | 'TARO-H5' | 'TARO-MP'
+  width?: string | number
+  height?: string | number
   el?: string
   divElement?: HTMLDivElement
   canvasElement?: HTMLCanvasElement

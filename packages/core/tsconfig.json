@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
     "target": "es5", // 编译后的es版本
+    "lib": ["es2016", "dom"],
     "module": "esnext", // 前端模块化规范
     "allowJs": true, // 允许引入js文件
     "strict": true, // 开启严格模式
     "importHelpers": true,
     "moduleResolution": "node",
+    "types": [],
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,

@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
     "target": "ES5",
+    "lib": ["ES2016", "DOM"],
     "module": "ESNext",
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
+    "types": [],
     "removeComments": true,
     "skipLibCheck": false,
     "esModuleInterop": true,

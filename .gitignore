@@ -2,6 +2,8 @@
 node_modules
 yarn.lock
 package-lock.json
+!wheel-canvas-js/package-lock.json
+.tmp-feedback-audit/
 
 # local env files
 .env.local
